@@ -114,6 +114,12 @@ Seven sections plus the footer. Section padding is 56 to 88px.
 - **Review dates show as month and year.** The live widget stores them inconsistently: some are MM/DD and one is DD/MM.
 - **The cookie banner is not rebuilt.** The demo sets no cookies of its own and adds no visible UI.
 
+## Client review 1 (8 October 2026)
+
+Feedback: "cant really see this" (the logo and the locations over the hero photo) and "sort the logo in the top and locations because its not looking super good".
+- **Logo:** the lock-up now sits in a solid Ink tab, flush in the top-left corner. Rio sets its own logo in a dark box there. The orange reads on every ground, and the tab fades in at the handover while the preloader's lock-up still lands on it.
+- **Locations and the top note:** moved off the busy sky into the lower part of the hero, on an Ink panel (86%, no backdrop-filter) beside the headline. Place names are white with orange separators; the note, lead, call line and button sit under them.
+
 ## How it works
 
 ### Smooth scroll
@@ -130,7 +136,7 @@ Each section has one fixed ground: one dark opening, then Paper and White bands,
 
 ### Header
 
-Lives in `components/Header.tsx` and follows Rio: the lock-up on the left, the phone number and Menu on the right, with no bar or box. Its text follows the `data-tone` of the section under it. The logo stays orange throughout. It hides on scroll down and returns on scroll up.
+Lives in `components/Header.tsx` and follows Rio: the lock-up in an Ink tab in the top-left corner, the phone number and Menu on the right, with no bar or box. Its text follows the `data-tone` of the section under it. The logo stays orange throughout. It hides on scroll down and returns on scroll up.
 
 ### Menu
 

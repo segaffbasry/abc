@@ -126,13 +126,13 @@ main:focus, section:focus { outline: none; }
 .preloader-fill { position: absolute; inset: 0; background: var(--orange); transform-origin: left; transform: scaleX(0); }
 .preloader:not(.is-active) [data-part="letter"] { opacity: 0; }
 /* The header logo stays hidden until the preloader's lock-up has landed on it. */
-.js:not(.logo-landed) .header-logo { visibility: hidden; }
+.js:not(.logo-landed) .header-logo .logo { visibility: hidden; }
 
 /* ---------- Header ---------- */
 .site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 150;
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: clamp(14px, 1.8vw, 24px) var(--gutter);
+  padding: 0 var(--gutter) 0 0;   /* the logo tab sits flush in the top-left corner */
   color: var(--white); transition: transform 0.7s var(--ease-out), color 0.4s linear;
 }
 /* The menu side fades in at the handover; the logo does not fade, the preloader's lock-up lands on it. */
@@ -140,7 +140,13 @@ main:focus, section:focus { outline: none; }
 .js .site-header:not(.is-in) .header-right { opacity: 0; }
 .site-header.tone-light { color: var(--ink); }
 .site-header.is-hidden { transform: translateY(-110%); }
-.header-logo { display: block; width: clamp(128px, 11vw, 158px); }
+/* Rio sets its logo in a dark box at the top-left corner. Here that tab is Ink, so the orange lock-up reads on every
+   ground, over the busy hero sky included (client review 1: "cant really see this"). The tab fades in at the
+   handover; the lock-up itself is placed by the preloader's flight. */
+.header-logo { position: relative; display: block; align-self: flex-start; padding: clamp(14px, 1.5vw, 20px) clamp(16px, 1.7vw, 24px); }
+.header-logo::before { content: ""; position: absolute; inset: 0; background: var(--ink); transition: opacity 0.6s linear; }
+.js .site-header:not(.is-in) .header-logo::before { opacity: 0; }
+.header-logo .logo { position: relative; width: clamp(128px, 11vw, 158px); }
 .header-right { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px); }
 .header-phone { position: relative; }
 .header-phone::after, .menu-toggle .caps::after {
@@ -181,17 +187,20 @@ main:focus, section:focus { outline: none; }
 .hero-photo-inner picture, .hero-photo-inner img { width: 100%; height: 100%; }
 .hero-photo img { object-position: 50% 62%; filter: saturate(0.95); }
 /* A shade at the top for the header and notes, and a deeper one at the foot for the headline. */
-.hero-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(22 22 22 / 0.62) 0%, rgb(22 22 22 / 0.2) 22%, rgb(22 22 22 / 0) 32%, rgb(22 22 22 / 0) 44%, rgb(22 22 22 / 0.78) 100%); }
-.hero-content { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 100svh; padding-top: clamp(96px, 15vh, 150px); padding-bottom: clamp(28px, 5.5vh, 56px); }
-.hero-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
-.hero-places { display: grid; gap: 2px; }
-.hero-note { max-width: 25em; text-align: right; }
+.hero-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(22 22 22 / 0.62) 0%, rgb(22 22 22 / 0.2) 22%, rgb(22 22 22 / 0) 32%, rgb(22 22 22 / 0) 40%, rgb(22 22 22 / 0.86) 100%); }
+.hero-content { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: 100svh; padding-top: clamp(96px, 15vh, 150px); padding-bottom: clamp(28px, 5.5vh, 56px); }
+.hero-places { display: flex; flex-wrap: wrap; gap: 4px 0; color: var(--white); font-size: 13.5px; }
+.hero-places li + li::before { content: "/"; margin: 0 0.7em; color: var(--orange); }
+.hero-note { font-size: 15px; color: rgb(255 255 255 / 0.84); max-width: 26em; }
 .hero-bottom { display: grid; grid-template-columns: 1fr minmax(260px, 380px); align-items: end; gap: var(--gap); }
 .hero-title { font-family: "Abril Fatface", Georgia, serif; font-weight: 400; font-size: var(--fs-h1); line-height: 0.98; letter-spacing: 0.015em; text-transform: uppercase; }
 .hero-line { display: block; overflow: hidden; padding-bottom: 0.04em; }
 .hero-line > span { display: inline-block; }
 .hero-line-1 { padding-left: 1.6em; }   /* Rio steps its last line in */
-.hero-side { display: grid; gap: 14px; justify-items: start; padding-bottom: 6px; }
+/* The notes sit on an Ink panel, the same language as the logo tab, so they read over any part of the photo
+   (client review 1). Solid tint, no backdrop-filter over the moving photo. */
+.hero-side { display: grid; gap: 12px; justify-items: start; padding: clamp(20px, 2vw, 28px); background: rgb(22 22 22 / 0.86); }
+.hero-places { padding-bottom: 12px; margin-bottom: 2px; border-bottom: 1px solid var(--line-light); width: 100%; }
 .hero-lead { font-size: clamp(18px, 1.45vw, 21px); line-height: 1.4; font-weight: 500; }
 .hero-cta-line { color: rgb(255 255 255 / 0.8); font-size: 15px; }
 
@@ -331,8 +340,6 @@ main:focus, section:focus { outline: none; }
 }
 @media (max-width: 767px) {
   .header-phone { display: none; }
-  .hero-top { flex-direction: column; gap: 14px; }
-  .hero-note { text-align: left; max-width: 22em; }
   .hero-line-1 { padding-left: 0.8em; }
   .hero-title { font-size: clamp(38px, 11vw, 56px); }
   .facts { grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
